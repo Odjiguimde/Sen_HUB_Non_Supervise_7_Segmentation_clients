@@ -1,8 +1,8 @@
-# 📊 Segmentation des clients — Apprentissage non supervisé (DBSCAN)
+#  Segmentation des clients — Apprentissage non supervisé (DBSCAN)
 
 Projet de **clustering de clients** d'une entreprise de télécommunications, réalisé dans le cadre du module *Unsupervised Learning* du **Sen HUB**. Trois algorithmes de clustering (KMeans, CAH, DBSCAN) sont comparés, le meilleur modèle est sélectionné puis **déployé sous forme d'application web interactive** (Streamlit) permettant d'attribuer une classe à un nouveau client à partir de ses caractéristiques.
 
-## 🎯 Objectif
+##  Objectif
 
 Identifier des groupes homogènes de clients à partir de leurs comportements d'usage (appels, SMS, ancienneté, valeur client, etc.), sans étiquette préalable, afin de :
 
@@ -11,7 +11,7 @@ Identifier des groupes homogènes de clients à partir de leurs comportements d'
 - détecter les clients au comportement atypique (anomalies),
 - fournir un outil simple permettant de classer instantanément un nouveau client.
 
-## 📁 Structure du dépôt
+##  Structure du dépôt
 
 ```
 .
@@ -22,7 +22,7 @@ Identifier des groupes homogènes de clients à partir de leurs comportements d'
 └── README.md
 ```
 
-## 🗂️ Jeu de données
+##  Jeu de données
 
 Le jeu de données ("Télécommunications") contient **3 150 clients** décrits par **12 variables** numériques relatives à leur comportement d'usage :
 
@@ -41,7 +41,7 @@ Le jeu de données ("Télécommunications") contient **3 150 clients** décrits 
 | `Age` | Âge du client |
 | `Customer Value` | Score de valeur économique du client |
 
-## 🧪 Méthodologie
+##  Méthodologie
 
 1. **Prétraitement** : normalisation des observations (`normalize`, norme par ligne).
 2. **Réduction de dimension** : ACP (PCA) à 2 composantes pour la visualisation — **97,5 %** de la variance expliquée conservée.
@@ -55,7 +55,7 @@ Le jeu de données ("Télécommunications") contient **3 150 clients** décrits 
 
 ➡️ **DBSCAN** obtient le meilleur score de silhouette : c'est le modèle retenu pour le déploiement. Il présente aussi l'avantage de détecter automatiquement les **clients atypiques** (bruit / anomalies) plutôt que de les forcer dans un cluster.
 
-## 📈 Résultats
+##  Résultats
 
 Le clustering DBSCAN final identifie :
 
@@ -65,7 +65,7 @@ Le clustering DBSCAN final identifie :
 | Classe 1 | 144 clients | **Client non fidèle** — faible utilisation, faible valeur client |
 | -1 (bruit) | 21 clients | **Anomalie** — profil atypique, ne correspond à aucun groupe |
 
-## 🚀 Déploiement
+##  Déploiement
 
 DBSCAN ne possède pas de méthode `predict()` native (contrairement à KMeans, il ne calcule pas de centres de clusters). La solution retenue s'appuie sur les **points cœur** (*core samples*) mémorisés par le modèle entraîné :
 
@@ -76,7 +76,7 @@ DBSCAN ne possède pas de méthode `predict()` native (contrairement à KMeans, 
 
 Cette logique est implémentée dans `app.py`. Le notebook contient également une version de démonstration avec **Gradio**, tandis que l'application déployée (GitHub + Streamlit) utilise **Streamlit**.
 
-## ⚙️ Installation et utilisation
+##  Installation et utilisation
 
 ### Prérequis
 - Python 3.9+
@@ -101,7 +101,7 @@ streamlit run app.py
 
 L'application s'ouvre dans le navigateur. Il suffit de choisir un préremplissage (valeurs médianes ou exemple), d'ajuster les caractéristiques du client, puis de cliquer sur **« Prédire la classe »** pour obtenir son segment.
 
-## 🛠️ Technologies utilisées
+##  Technologies utilisées
 
 - **Python** — pandas, numpy
 - **Scikit-learn** — `PCA`, `KMeans`, `AgglomerativeClustering`, `DBSCAN`, `normalize`, `silhouette_score`
@@ -112,12 +112,12 @@ L'application s'ouvre dans le navigateur. Il suffit de choisir un préremplissag
 - **Gradio** — prototype d'interface (notebook)
 - **Joblib** — sérialisation du modèle
 
-## 📌 Limites et pistes d'amélioration
+##  Limites et pistes d'amélioration
 
 - Le nombre de clusters/paramètres (`eps`, `min_samples`) a été fixé de façon empirique ; une recherche plus systématique (grid search sur la silhouette) pourrait affiner le résultat.
 - Le jeu de données étant statique, le modèle n'est pas ré-entraîné automatiquement : toute dérive du comportement client nécessiterait un nouvel entraînement.
 - L'interprétation des classes (« client fidèle » / « client non fidèle ») repose sur l'analyse du profil moyen par cluster et pourrait être enrichie avec des règles métier supplémentaires.
 
-## 👤 Contexte
+##  Contexte
 
 Projet réalisé dans le cadre du programme **Sen HUB** — module Apprentissage non supervisé / Clustering.
